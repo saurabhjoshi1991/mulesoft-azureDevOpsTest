@@ -5,7 +5,7 @@ pipeline {
 		echo ' ENtering Unit Test Stage'
       steps {
 		echo 'In Unit Test'
-        'mvn clean test'
+        bash 'mvn clean test'
 		echo 'Completed Unit Test Stage'
       }
     }
@@ -13,7 +13,7 @@ pipeline {
 		echo 'Entering Deploy CH Stage'
       steps {
 		echo 'firing mv package deploy command'
-        'mvn package deploy -DmuleDeploy'
+        bash 'mvn package deploy -DmuleDeploy'
 		echo 'mvn packgae deploy completed'
       }
     }
