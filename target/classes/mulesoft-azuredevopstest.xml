@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="mulesoft-azuredevopstestFlow" doc:id="67344705-5ce0-446e-97ed-87f2f6639507" >
+		<http:listener doc:name="Listener" doc:id="c4793c03-e156-479f-8a00-bdb61f576935" config-ref="HTTP_Listener_config" path="${http.path}" allowedMethods="POST"/>
+		<ee:transform doc:name="Transform Message" doc:id="dfed21bf-aa4e-471c-b7c8-1e7952f69a58" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: if(sizeOf(attributes.queryParams."name" default "") > 0)
+				"Hello " ++ (attributes.queryParams."name" default "") ++ " !!!"
+			else
+				"Hello World!!!"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6bfea5bc-41f9-4f8b-93b8-e4a9ebf35b38" message='"Hello There!!!"'/>
+	</flow>
+</mule>
